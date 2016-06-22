@@ -20,7 +20,12 @@ public class PlayOneRandomSound : StateMachineBehaviour {
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        
+        //if(!stateInfo.IsName("BamBam_Power_Up"))
+        
         source = GameObject.Find(AudioSourceName).GetComponent<AudioSource>();
+        source.mute = false;
+
         timeStarted = Time.realtimeSinceStartup;
         //PlayRandomSound(stateInfo);
         canSound = true;
@@ -29,6 +34,7 @@ public class PlayOneRandomSound : StateMachineBehaviour {
 	// OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
 	override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        source.mute = false;
         //SoundClips[randomNumber].length
         realTime = Time.realtimeSinceStartup;
         //se a musica acabou
@@ -38,14 +44,16 @@ public class PlayOneRandomSound : StateMachineBehaviour {
             canSound = true;
             //PlayRandomSound(stateInfo);
         }
-        Debug.Log(stateInfo.length);
+        //Debug.Log(stateInfo.length);
         //<!--playrandom sound
         ///*
         if (canSound)
         {
-            randomNumber = Random.Range(0, SoundClips.Length);
+            randomNumber = Random.Range(0, SoundClips.Length - 1);
             if (SoundClips[randomNumber].length < AnimationTime - (Time.realtimeSinceStartup - timeStarted))
             {
+                source.Stop();
+                source.Play();
                 source.PlayOneShot(SoundClips[randomNumber]);
                 timeStartedClip = Time.realtimeSinceStartup;
                 canSound = false;
@@ -57,7 +65,7 @@ public class PlayOneRandomSound : StateMachineBehaviour {
 
     private void PlayRandomSound(AnimatorStateInfo info)
     {
-        randomNumber = Random.Range(0, SoundClips.Length);
+        randomNumber = Random.Range(0, SoundClips.Length - 1);
         //enquanto não achar um som que caiba na duração
         while(SoundClips[randomNumber].length > AnimationTime - (Time.realtimeSinceStartup - timeStarted))
         {
@@ -70,9 +78,7 @@ public class PlayOneRandomSound : StateMachineBehaviour {
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        source.Stop();
-        
-	}
+    }
 
 	// OnStateMove is called right after Animator.OnAnimatorMove(). Code that processes and affects root motion should be implemented here
 	//override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
