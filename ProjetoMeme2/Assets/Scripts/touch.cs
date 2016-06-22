@@ -18,23 +18,25 @@ public class touch : MonoBehaviour {
     private float currentLerpTime = 0f;
     private float perc;
     private float xPosition;
+    //private bool 
 
 	public void Stop(){
         ///*
         if (CanStop)
         {
             xPosition = VaiEVem.transform.position.x;
-
-            if (xPosition >= (-1) * ReferencePosition && xPosition <= ReferencePosition)
+            //Debug.Log(xPosition);
+            if (xPosition >= -0.5 && xPosition <= 0.5)
             {
+                AlreadyTouched = false;
                 if (!AlreadyTouched)
                 {
                     AlreadyTouched = true;
                     // x = x+0.5f;
                     //Debug.Log("Yay");
                     //Barrinha2.transform.localScale += new Vector3(0,x,0);
-                    Debug.Log(VaiEVem.transform.position.x);
-                    Debug.Log("hello dear");
+                    //Debug.Log(xPosition);
+                    //Debug.Log("hello dear");
                     EnergyBar.value += 1 / CountToPowerUp;
                     GetComponent<ScoreManager>().AddScore(1);
                     BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
@@ -42,6 +44,7 @@ public class touch : MonoBehaviour {
             }
             else
             {
+                GetComponent<LifeBarManager>().ReduceLife(1);
                 AlreadyTouched = false;
             }
         }
@@ -57,11 +60,12 @@ public class touch : MonoBehaviour {
 
     public void Update()
     {
+        /*
         if(Input.GetMouseButtonDown(0))
         {
             Stop();
         }
-
+        */
         //<!-- consume energy
         if(EnergyBar.value == 1)
         {
