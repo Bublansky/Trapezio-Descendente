@@ -12,7 +12,10 @@ public class GameOverController : MonoBehaviour {
 
     public void GameOver()
     {
+        PlayerPrefsManager.UpdateIntLocalScore(PlayerPrefsManager.HIGHSCORE, GetComponent<ScoreManager>().GetScore());
+        PlayerPrefsManager.UpdateIntLocalScore(PlayerPrefsManager.LASTSCORE, GetComponent<ScoreManager>().GetScore());
         SceneManager.LoadScene("Game_Over");
+
         //Application.LoadLevel("Game_Over");
     }
 	// Update is called once per frame
@@ -20,3 +23,4 @@ public class GameOverController : MonoBehaviour {
 	
 	}
 }
+
