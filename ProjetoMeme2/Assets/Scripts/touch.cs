@@ -21,9 +21,19 @@ public class touch : MonoBehaviour {
     private bool DelayPowerUp = false;
     public float DelayPowerUpTime = 1.5f;
     public float AddVaiEVemSpeed;
+    private Color InitialColor;
+    public Color ClickColor;
+    private Color ClickColor2;
     private float aux;
     //private bool 
 
+
+    public void Start()
+    {
+        InitialColor = RegiaoAlvo.GetComponent<SpriteRenderer>().color;
+        ClickColor2 = new Color(ClickColor.r, ClickColor.g, ClickColor.b);
+        //Debug.Log(ClickColor.r + "," + ClickColor.g + "," + ClickColor.b);
+    }
 	public void Stop(){
         ///*
         if (DelayPowerUp)
@@ -47,6 +57,13 @@ public class touch : MonoBehaviour {
                     //Debug.Log(xPosition);
                     //Debug.Log("hello dear");
                     EnergyBar.value += 1 / CountToPowerUp;
+
+                    //feedback de acerto
+                    
+                    //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
+                    RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
+                    Invoke("ChangeColor", 0.2f);
+
                     GetComponent<ScoreManager>().AddScore(1);
                     BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
                 }
@@ -58,6 +75,10 @@ public class touch : MonoBehaviour {
             }
         }
         //*/
+    }
+    private void ChangeColor()
+    {
+        RegiaoAlvo.GetComponent<SpriteRenderer>().color = InitialColor;
     }
     public void PowerUpTouch()
     {
