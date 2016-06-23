@@ -20,6 +20,8 @@ public class touch : MonoBehaviour {
     private float xPosition;
     private bool DelayPowerUp = false;
     public float DelayPowerUpTime = 1.5f;
+    public float AddVaiEVemSpeed;
+    private float aux;
     //private bool 
 
 	public void Stop(){
@@ -74,12 +76,22 @@ public class touch : MonoBehaviour {
         }
         */
         //<!-- consume energy
+        // power up ativou aqui!!1
         if(EnergyBar.value == 1)
         {
             //Debug.Log("hello");
             //ativa o power up
             BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true);
+
+            //aumenta a velocidade do vai e vem
+            aux = VaiEVem.GetComponent<Animator>().GetFloat("AnimationSpeed");
+            VaiEVem.GetComponent<Animator>().SetFloat("AnimationSpeed", aux + AddVaiEVemSpeed);
+            //VaiEVem.GetComponent<Animator>().SetInteger("AnimationSpeed2", 10);
+
+            //controla o tempo de atraso do power up
             DelayPowerUp = true;
+
+            //controla o toque durante o power up
             CanStop = false;
         }
         if(!CanStop)
