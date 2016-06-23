@@ -26,4 +26,9 @@ public class ButtonController : MonoBehaviour {
             //Application.LoadLevel(LevelToLoad);
         }
 	}
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

@@ -36,6 +36,10 @@ public class touch : MonoBehaviour {
     }
 	public void Stop(){
         ///*
+        if(Time.timeScale == 0)
+        {
+            return;
+        }
         if (DelayPowerUp)
         {
             return;
@@ -49,23 +53,28 @@ public class touch : MonoBehaviour {
                 AlreadyTouched = false;
                 if (!AlreadyTouched)
                 {
-                    
-                    AlreadyTouched = true;
-                    // x = x+0.5f;
-                    //Debug.Log("Yay");
-                    //Barrinha2.transform.localScale += new Vector3(0,x,0);
-                    //Debug.Log(xPosition);
-                    //Debug.Log("hello dear");
-                    EnergyBar.value += 1 / CountToPowerUp;
 
-                    //feedback de acerto
+                    //se o jogo não está pausado
                     
-                    //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
-                    RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
-                    Invoke("ChangeColor", 0.2f);
+                        AlreadyTouched = true;
+                        // x = x+0.5f;
+                        //Debug.Log("Yay");
+                        //Barrinha2.transform.localScale += new Vector3(0,x,0);
+                        //Debug.Log(xPosition);
+                        //Debug.Log("hello dear");
+                        EnergyBar.value += 1 / CountToPowerUp;
 
-                    GetComponent<ScoreManager>().AddScore(1);
-                    BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
+                        //feedback de acerto
+
+                        //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
+                        RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
+                        Invoke("ChangeColor", 0.2f);
+
+                        GetComponent<ScoreManager>().AddScore(1);
+                        BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
+                    
+                    
+                   
                 }
             }
             else
@@ -95,6 +104,7 @@ public class touch : MonoBehaviour {
         if(Input.GetMouseButtonDown(0))
         {
             Stop();
+            PowerUpTouch();
         }
         */
         //<!-- consume energy
