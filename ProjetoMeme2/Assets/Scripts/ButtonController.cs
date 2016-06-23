@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class ButtonController : MonoBehaviour {
@@ -13,14 +14,16 @@ public class ButtonController : MonoBehaviour {
 	
 	}
 	public void LoadScene(string Level){
-		Application.LoadLevel (Level);
+        SceneManager.LoadScene(Level);
+        //Application.LoadLevel (Level);
 	}
 	public void LevelOnClick(string Level){
 		LevelToLoad = Level;
 	}
 	public void LoadIf(string Scene){
 		if (PlayerPrefs.GetInt (Scene + "Unlocked") == 1) {
-			Application.LoadLevel(LevelToLoad);
-		}
+            SceneManager.LoadScene(LevelToLoad);
+            //Application.LoadLevel(LevelToLoad);
+        }
 	}
 }

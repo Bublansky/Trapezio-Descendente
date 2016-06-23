@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Loading2 : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Application.LoadLevel("Game");
+        SceneManager.LoadScene("Game");
+		//Application.LoadLevel("Game");
 	}
 	
 	// Update is called once per frame

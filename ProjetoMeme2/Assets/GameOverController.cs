@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameOverController : MonoBehaviour {
@@ -11,8 +12,8 @@ public class GameOverController : MonoBehaviour {
 
     public void GameOver()
     {
-        Application.LoadLevel("Game_Over");
-        
+        SceneManager.LoadScene("Game_Over");
+        //Application.LoadLevel("Game_Over");
     }
 	// Update is called once per frame
 	void Update () {

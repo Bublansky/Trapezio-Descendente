@@ -6,7 +6,7 @@ public class GenerateObjectsByTime : MonoBehaviour {
     public float TimeInterval;
     public GameObject[] ObjectsToGenerate;
     private int randomNumber;
-    private GameObject obj;
+    //private GameObject obj;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +17,7 @@ public class GenerateObjectsByTime : MonoBehaviour {
     {
         randomNumber = Random.Range(0, ObjectsToGenerate.Length - 1);
 
-        obj = Instantiate(ObjectsToGenerate[randomNumber]) as GameObject;
+        Instantiate(ObjectsToGenerate[randomNumber]);
         
     }
 

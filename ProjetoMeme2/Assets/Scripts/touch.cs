@@ -18,11 +18,17 @@ public class touch : MonoBehaviour {
     private float currentLerpTime = 0f;
     private float perc;
     private float xPosition;
+    private bool DelayPowerUp = false;
+    public float DelayPowerUpTime = 1.5f;
     //private bool 
 
 	public void Stop(){
         ///*
-        if (CanStop)
+        if (DelayPowerUp)
+        {
+            return;
+        }
+        else if (CanStop)
         {
             xPosition = VaiEVem.transform.position.x;
             //Debug.Log(xPosition);
@@ -31,6 +37,7 @@ public class touch : MonoBehaviour {
                 AlreadyTouched = false;
                 if (!AlreadyTouched)
                 {
+                    
                     AlreadyTouched = true;
                     // x = x+0.5f;
                     //Debug.Log("Yay");
@@ -70,8 +77,9 @@ public class touch : MonoBehaviour {
         if(EnergyBar.value == 1)
         {
             //Debug.Log("hello");
+            //ativa o power up
             BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true);
-
+            DelayPowerUp = true;
             CanStop = false;
         }
         if(!CanStop)
@@ -89,8 +97,14 @@ public class touch : MonoBehaviour {
                 CanStop = true;
                 currentLerpTime = 0;
                 BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", false);
+                
+                Invoke("SetDelayPowerUpFalse", DelayPowerUpTime);
             }
         }
         // -->
     } 
+    private void SetDelayPowerUpFalse()
+    {
+        DelayPowerUp = false;
+    }
 }

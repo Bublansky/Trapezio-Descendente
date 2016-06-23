@@ -7,11 +7,11 @@ public class MuteSound : MonoBehaviour {
 	public Sprite ButtonON, ButtonOFF;
 	private bool muted =false;
 	private GameObject SoundButton;
-	private Animator SounderAni;
+	//private Animator SounderAni;
 	// Use this for initialization
 	void Start () {
 		SoundButton= GameObject.FindGameObjectWithTag (SoundButtonTAG);
-		SounderAni = SoundButton.GetComponent<Animator> ();
+		//SounderAni = SoundButton.GetComponent<Animator> ();
 		if (AudioListener.volume == 0.0f) {
 			muted= true;
 			SoundButton.GetComponent<Image>().sprite=ButtonOFF;
