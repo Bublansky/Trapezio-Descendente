@@ -70,6 +70,7 @@ public class touch : MonoBehaviour {
             }
             else
             {
+                Handheld.Vibrate();
                 GetComponent<LifeBarManager>().ReduceLife(1);
                 AlreadyTouched = false;
             }
