@@ -12,8 +12,16 @@ public class GameOverController : MonoBehaviour {
 
     public void GameOver()
     {
-        PlayerPrefsManager.UpdateIntLocalScore(PlayerPrefsManager.HIGHSCORE, GetComponent<ScoreManager>().GetScore());
-        PlayerPrefsManager.UpdateIntLocalScore(PlayerPrefsManager.LASTSCORE, GetComponent<ScoreManager>().GetScore());
+        int highScore = PlayerPrefsManager.GetIntLocalValue(PlayerPrefsManager.HIGHSCORE);
+        int score = GetComponent<ScoreManager>().GetScore();
+
+        if(score > highScore)
+        {
+            PlayerPrefsManager.UpdateIntLocalValue(PlayerPrefsManager.HIGHSCORE, score);
+        }
+        
+        PlayerPrefsManager.UpdateIntLocalValue(PlayerPrefsManager.LASTSCORE, score);
+
         SceneManager.LoadScene("Game_Over");
 
         //Application.LoadLevel("Game_Over");

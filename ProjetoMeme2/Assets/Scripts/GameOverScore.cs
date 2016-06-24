@@ -10,8 +10,8 @@ public class GameOverScore : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        ScoreText.text = PlayerPrefsManager.GetIntLocalScore(PlayerPrefsManager.LASTSCORE).ToString();
-        HighScoreText.text = PlayerPrefsManager.GetIntLocalScore(PlayerPrefsManager.HIGHSCORE).ToString();
+        ScoreText.text = PlayerPrefsManager.GetIntLocalValue(PlayerPrefsManager.LASTSCORE).ToString();
+        HighScoreText.text = PlayerPrefsManager.GetIntLocalValue(PlayerPrefsManager.HIGHSCORE).ToString();
     }
 	
 	// Update is called once per frame

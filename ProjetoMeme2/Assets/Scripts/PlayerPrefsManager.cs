@@ -11,16 +11,13 @@ public class PlayerPrefsManager : MonoBehaviour {
 	
 	}
 	
-    public static void UpdateIntLocalScore(string param, int value)
+    public static void UpdateIntLocalValue(string param, int value)
     {
-        int localScore = GetIntLocalScore(param);
-        if (localScore < value)
-        {
-            PlayerPrefs.SetInt(param, value);
-        }
+        PlayerPrefs.SetInt(param, value);
+        
     }
 
-    public static int GetIntLocalScore(string param)
+    public static int GetIntLocalValue(string param)
     {
         return PlayerPrefs.GetInt(param);
     }
