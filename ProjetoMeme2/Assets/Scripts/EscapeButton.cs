@@ -28,7 +28,9 @@ public class EscapeButton : MonoBehaviour {
                 //se o jogo estiver pausado
                 if(Time.timeScale == 0)
                 {
-                    GetComponent<PauseController>().ResumeGame();
+                    //GetComponent<PauseController>().ResumeGame();
+                    Time.timeScale = 1;
+                    SceneManager.LoadScene(ExitGameSceneName);
                 }
                 else
                 {
