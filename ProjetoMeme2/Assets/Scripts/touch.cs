@@ -13,7 +13,7 @@ public class touch : MonoBehaviour {
     private bool CanStop = true;
     private bool AlreadyTouched = false;
     public float ScaleSpeed = 0.2f;
-    public float ReferencePosition = 0.5f;
+    public float ReferencePosition;
     private float lerpTime = 3f;
     private float currentLerpTime = 0f;
     private float perc;
@@ -25,6 +25,10 @@ public class touch : MonoBehaviour {
     public Color ClickColor;
     private Color ClickColor2;
     private float aux;
+    //public GameObject FeedbackAcerto;
+    public Animator mainCamera;
+    public GameObject FeedbackPowerUp;
+
     //private bool 
 
 
@@ -48,7 +52,7 @@ public class touch : MonoBehaviour {
         {
             xPosition = VaiEVem.transform.position.x;
             //Debug.Log(xPosition);
-            if (xPosition >= -0.5 && xPosition <= 0.5)
+            if (xPosition >= -ReferencePosition && xPosition <= ReferencePosition)
             {
                 AlreadyTouched = false;
                 if (!AlreadyTouched)
@@ -64,11 +68,15 @@ public class touch : MonoBehaviour {
                         //Debug.Log("hello dear");
                         EnergyBar.value += 1 / CountToPowerUp;
 
-                        //feedback de acerto
+                    //feedback de acerto
+                    mainCamera.SetBool("CanShake", true);
 
-                        //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
-                        RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
+                    //FeedbackAcerto.SetActive(true);
+                    //Invoke("SetFeedBackInactive", 0.2f);
+                    //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
+                    RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
                         Invoke("ChangeColor", 0.2f);
+
 
                         GetComponent<ScoreManager>().AddScore(1);
                         BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
@@ -85,6 +93,10 @@ public class touch : MonoBehaviour {
             }
         }
         //*/
+    }
+    private void SetFeedBackInactive()
+    {
+        //FeedbackAcerto.SetActive(false);
     }
     private void ChangeColor()
     {
@@ -114,6 +126,8 @@ public class touch : MonoBehaviour {
             //Debug.Log("hello");
             //ativa o power up
             BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true);
+            mainCamera.SetBool("PowerUp", true);
+            FeedbackPowerUp.SetActive(true);
 
             //aumenta a velocidade do vai e vem
             aux = VaiEVem.GetComponent<Animator>().GetFloat("AnimationSpeed");
@@ -141,7 +155,9 @@ public class touch : MonoBehaviour {
                 CanStop = true;
                 currentLerpTime = 0;
                 BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", false);
-                
+                mainCamera.SetBool("PowerUp", false);
+                FeedbackPowerUp.SetActive(false);
+
                 Invoke("SetDelayPowerUpFalse", DelayPowerUpTime);
             }
         }
