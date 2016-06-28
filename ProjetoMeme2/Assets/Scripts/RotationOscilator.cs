@@ -23,6 +23,10 @@ public class RotationOscilator : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if(Time.timeScale == 0)
+        {
+            return;
+        }
         rotation = transform.eulerAngles;
         // se z > 270
 

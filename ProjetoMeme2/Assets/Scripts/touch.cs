@@ -118,6 +118,7 @@ public class touch : MonoBehaviour {
         //<!-- consume energy
         if(EnergyBar.value == 1)    // power up ativou aqui!!1
         {
+            CountToPowerUp++;   //aumenta a quantidade pra liberar o power up
             BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true); //ativa o power up
             mainCamera.SetBool("PowerUp", true);
             FeedbackPowerUp.SetActive(true);
