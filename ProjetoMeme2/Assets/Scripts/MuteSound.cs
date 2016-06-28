@@ -10,14 +10,19 @@ public class MuteSound : MonoBehaviour {
 	//private Animator SounderAni;
 	// Use this for initialization
 	void Start () {
-		//SoundButton= GameObject.FindGameObjectWithTag (SoundButtonTAG);
-		//SounderAni = SoundButton.GetComponent<Animator> ();
-		if (AudioListener.volume == 0.0f) {
-			muted= true;
-			SoundButton.GetComponent<Image>().sprite=ButtonOFF;
+        //SoundButton= GameObject.FindGameObjectWithTag (SoundButtonTAG);
+        //SounderAni = SoundButton.GetComponent<Animator> ();
+
+        //if (AudioListener.volume == 0.0f) {
+        if (PlayerPrefsManager.GetIntLocalValue(PlayerPrefsManager.MUTE) == 1)  // se estiver mudo
+        {
+            muted = true;
+            AudioListener.volume = 0.0f;
+            SoundButton.GetComponent<Image>().sprite=ButtonOFF;
 
 		} else {
-			muted = false;
+            AudioListener.volume = 1f;
+            muted = false;
 			SoundButton.GetComponent<Image>().sprite=ButtonON;
 		}
 	}
@@ -30,13 +35,15 @@ public class MuteSound : MonoBehaviour {
 		if (!muted)
 		{
 			AudioListener.volume = 0.0f;
-			muted = true;
+            PlayerPrefsManager.UpdateIntLocalValue(PlayerPrefsManager.MUTE, 1);
+            muted = true;
 			SoundButton.GetComponent<Image>().sprite=ButtonOFF;
 		}
 		else
 		{
 			AudioListener.volume = 1.0f;
-			muted = false;
+            PlayerPrefsManager.UpdateIntLocalValue(PlayerPrefsManager.MUTE, 0);
+            muted = false;
 			SoundButton.GetComponent<Image>().sprite=ButtonON;
 		}
 	}

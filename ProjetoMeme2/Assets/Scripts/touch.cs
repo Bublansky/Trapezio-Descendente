@@ -32,11 +32,16 @@ public class touch : MonoBehaviour {
     public float MaxRotation;
     public Transform Roleta;
     private float zRotation;
+    private bool canLostLife = true;
 
     public void Start()
     {
         InitialColor = RegiaoAlvo.GetComponent<SpriteRenderer>().color;
         ClickColor2 = new Color(ClickColor.r, ClickColor.g, ClickColor.b);
+    }
+    public void CanLostLife()
+    {
+        canLostLife = true;
     }
 	public void Stop()
     {
@@ -65,9 +70,13 @@ public class touch : MonoBehaviour {
                 }
                 else
                 {
-                    Handheld.Vibrate();
-                    GetComponent<LifeBarManager>().ReduceLife(1);
-                    AlreadyTouched = false;
+                    if(canLostLife)
+                    {
+                        canLostLife = false;
+                        Handheld.Vibrate();
+                        GetComponent<LifeBarManager>().ReduceLife(1);
+                        Invoke("CanLostLife", 0.2f);
+                    }
                 }
             }
             else //se for roleta
@@ -82,9 +91,13 @@ public class touch : MonoBehaviour {
                 }
                 else
                 {
-                    Handheld.Vibrate();
-                    GetComponent<LifeBarManager>().ReduceLife(1);
-                    AlreadyTouched = false;
+                    if (canLostLife)
+                    {
+                        canLostLife = false;
+                        Handheld.Vibrate();
+                        GetComponent<LifeBarManager>().ReduceLife(1);
+                        Invoke("CanLostLife", 0.2f);
+                    }
                 }
             }
         }
@@ -108,13 +121,13 @@ public class touch : MonoBehaviour {
 
     public void Update()
     {
-        /*
-        if(Input.GetMouseButtonDown(0))
+        ///*
+        if(Input.GetMouseButtonDown(0) && Camera.main.ScreenToWorldPoint(Input.mousePosition).y <= 3)
         {
             Stop();
             PowerUpTouch();
         }
-        */
+        //*/
         //<!-- consume energy
         if(EnergyBar.value == 1)    // power up ativou aqui!!1
         {
