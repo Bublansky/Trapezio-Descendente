@@ -28,17 +28,18 @@ public class touch : MonoBehaviour {
     //public GameObject FeedbackAcerto;
     public Animator mainCamera;
     public GameObject FeedbackPowerUp;
-
-    //private bool 
-
+    public float MinRotation;
+    public float MaxRotation;
+    public Transform Roleta;
+    private float zRotation;
 
     public void Start()
     {
         InitialColor = RegiaoAlvo.GetComponent<SpriteRenderer>().color;
         ClickColor2 = new Color(ClickColor.r, ClickColor.g, ClickColor.b);
-        //Debug.Log(ClickColor.r + "," + ClickColor.g + "," + ClickColor.b);
     }
-	public void Stop(){
+	public void Stop()
+    {
         ///*
         if(Time.timeScale == 0)
         {
@@ -50,46 +51,41 @@ public class touch : MonoBehaviour {
         }
         else if (CanStop)
         {
-            xPosition = VaiEVem.transform.position.x;
-            //Debug.Log(xPosition);
-            if (xPosition >= -ReferencePosition && xPosition <= ReferencePosition)
+            if(VaiEVem != null) //se for vai e vem
             {
-                AlreadyTouched = false;
-                if (!AlreadyTouched)
+                xPosition = VaiEVem.transform.position.x;
+                if (xPosition >= -ReferencePosition && xPosition <= ReferencePosition)
                 {
-
-                    //se o jogo não está pausado
-                    
-                        AlreadyTouched = true;
-                        // x = x+0.5f;
-                        //Debug.Log("Yay");
-                        //Barrinha2.transform.localScale += new Vector3(0,x,0);
-                        //Debug.Log(xPosition);
-                        //Debug.Log("hello dear");
-                        EnergyBar.value += 1 / CountToPowerUp;
-
-                    //feedback de acerto
-                    mainCamera.SetBool("CanShake", true);
-
-                    //FeedbackAcerto.SetActive(true);
-                    //Invoke("SetFeedBackInactive", 0.2f);
-                    //RegiaoAlvo.GetComponent<SpriteRenderer>().color = new Color(25, 45, 27);
+                    EnergyBar.value += 1 / CountToPowerUp;                        
+                    mainCamera.SetBool("CanShake", true);   //feedback de acerto
                     RegiaoAlvo.GetComponent<SpriteRenderer>().color = ClickColor2;
-                        Invoke("ChangeColor", 0.2f);
-
-
-                        GetComponent<ScoreManager>().AddScore(1);
-                        BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
-                    
-                    
-                   
+                    Invoke("ChangeColor", 0.2f);
+                    GetComponent<ScoreManager>().AddScore(1);
+                    BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);
+                }
+                else
+                {
+                    Handheld.Vibrate();
+                    GetComponent<LifeBarManager>().ReduceLife(1);
+                    AlreadyTouched = false;
                 }
             }
-            else
+            else //se for roleta
             {
-                Handheld.Vibrate();
-                GetComponent<LifeBarManager>().ReduceLife(1);
-                AlreadyTouched = false;
+                zRotation = Roleta.eulerAngles.z;
+                if (zRotation >= MinRotation && zRotation <= MaxRotation)
+                {
+                    EnergyBar.value += 1 / CountToPowerUp;  // aumenta a barra de energia
+                    GetComponent<ScoreManager>().AddScore(1);   // aumenta a pontuação
+                    mainCamera.SetBool("CanShake", true);   // feedback de acerto
+                    BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);    // animação do bambam
+                }
+                else
+                {
+                    Handheld.Vibrate();
+                    GetComponent<LifeBarManager>().ReduceLife(1);
+                    AlreadyTouched = false;
+                }
             }
         }
         //*/
@@ -120,25 +116,22 @@ public class touch : MonoBehaviour {
         }
         */
         //<!-- consume energy
-        // power up ativou aqui!!1
-        if(EnergyBar.value == 1)
+        if(EnergyBar.value == 1)    // power up ativou aqui!!1
         {
-            //Debug.Log("hello");
-            //ativa o power up
-            BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true);
+            BamBamObject.GetComponent<Animator>().SetBool("IsPowerUpActive", true); //ativa o power up
             mainCamera.SetBool("PowerUp", true);
             FeedbackPowerUp.SetActive(true);
-
-            //aumenta a velocidade do vai e vem
-            aux = VaiEVem.GetComponent<Animator>().GetFloat("AnimationSpeed");
-            VaiEVem.GetComponent<Animator>().SetFloat("AnimationSpeed", aux + AddVaiEVemSpeed);
-            //VaiEVem.GetComponent<Animator>().SetInteger("AnimationSpeed2", 10);
-
-            //controla o tempo de atraso do power up
-            DelayPowerUp = true;
-
-            //controla o toque durante o power up
-            CanStop = false;
+            if(VaiEVem != null) //se for vai e vem
+            {
+                aux = VaiEVem.GetComponent<Animator>().GetFloat("AnimationSpeed");  //aumenta a velocidade do vai e vem
+                VaiEVem.GetComponent<Animator>().SetFloat("AnimationSpeed", aux + AddVaiEVemSpeed);
+            }
+            else    //se for roleta
+            {
+                Roleta.GetComponent<RotationOscilator>().AddSpeed(1);
+            }
+            DelayPowerUp = true;    //controla o tempo de atraso do power up
+            CanStop = false;    //controla o toque durante o power up
         }
         if(!CanStop)
         {

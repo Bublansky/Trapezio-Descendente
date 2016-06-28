@@ -10,6 +10,11 @@ public class RotationOscilator : MonoBehaviour {
     public float BaseRotation;
     private int multiplier = -1;
 
+
+    public void AddSpeed(int count)
+    {
+        RotationBaseVelocity += count * Acceleration;
+    }
 	// Use this for initialization
 	void Start () {
         
