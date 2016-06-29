@@ -11,7 +11,6 @@ public class touch : MonoBehaviour {
     private Vector3 newScale;
     public int maxEnergy = 4;
     private bool CanStop = true;
-    private bool AlreadyTouched = false;
     public float ScaleSpeed = 0.2f;
     public float ReferencePosition;
     private float lerpTime = 3f;
@@ -86,8 +85,9 @@ public class touch : MonoBehaviour {
                 {
                     EnergyBar.value += 1 / CountToPowerUp;  // aumenta a barra de energia
                     GetComponent<ScoreManager>().AddScore(1);   // aumenta a pontuação
-                    mainCamera.SetBool("CanShake", true);   // feedback de acerto
+                    
                     BamBamObject.GetComponent<Animator>().SetBool("WantMore", true);    // animação do bambam
+                    mainCamera.SetBool("CanShake", true);   // feedback de acerto
                 }
                 else
                 {
@@ -96,6 +96,7 @@ public class touch : MonoBehaviour {
                         canLostLife = false;
                         Handheld.Vibrate();
                         GetComponent<LifeBarManager>().ReduceLife(1);
+                        GetComponent<PlayOneSound>().PlaySound(GetComponent<PlayOneSound>().Erro);
                         Invoke("CanLostLife", 0.2f);
                     }
                 }
