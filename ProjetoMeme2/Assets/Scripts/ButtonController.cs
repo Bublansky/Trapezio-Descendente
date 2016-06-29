@@ -4,6 +4,8 @@ using System.Collections;
 
 public class ButtonController : MonoBehaviour {
 	private string LevelToLoad;
+    public AudioSource audioSource;
+    public AudioClip buttonClickSound;
 	// Use this for initialization
 	void Start () {
 	
@@ -26,6 +28,12 @@ public class ButtonController : MonoBehaviour {
             //Application.LoadLevel(LevelToLoad);
         }
 	}
+
+    public void PlaySound()
+    {
+        audioSource.PlayOneShot(buttonClickSound);
+    }
+
 
     public void ExitGame()
     {
