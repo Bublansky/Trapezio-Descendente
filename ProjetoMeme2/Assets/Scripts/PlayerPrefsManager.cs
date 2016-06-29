@@ -6,6 +6,7 @@ public class PlayerPrefsManager : MonoBehaviour {
     public static string HIGHSCORE = "HIGHSCORE";   //int value
     public static string LASTSCORE = "LASTSCORE";   //int value
     public static string MUTE = "MUTE"; //int value (true = 1, false = 0)
+    public static string TUTORIAL = "TUTORIAL"; //int value (já rodou = 1, não rodou = 0) 
 
     // Use this for initialization
     void Start () {
