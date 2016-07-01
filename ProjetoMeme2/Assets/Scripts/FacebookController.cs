@@ -2,6 +2,7 @@
 using Facebook.Unity;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class FacebookController : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class FacebookController : MonoBehaviour {
     public Button ShareButton;
 
 
-    /*
+    
     void Awake()
     {
         FB.Init(InitCallback, OnHideUnity);
@@ -32,8 +33,8 @@ public class FacebookController : MonoBehaviour {
 
     }
 
-    */
-    /*
+    
+    
     private void InitCallback()
     {
         if (FB.IsInitialized)
@@ -48,9 +49,9 @@ public class FacebookController : MonoBehaviour {
             Debug.Log("Failed to Initialize the Facebook SDK");
         }
     }
-    */
+    
 
-    /*
+    
     private void OnHideUnity(bool isGameShown)
     {
         if (!isGameShown)
@@ -64,8 +65,13 @@ public class FacebookController : MonoBehaviour {
             Time.timeScale = 1;
         }
     }
-    */
-    /*
+    public void FacebookInitiate()
+    {
+        var perms = new List<string>() { "public_profile", "email", "user_friends" };
+        FB.LogInWithReadPermissions(perms, AuthCallback);
+        ShareOnFacebook();
+    }
+    
     private void AuthCallback(ILoginResult result)
     {
         if (FB.IsLoggedIn)
@@ -85,8 +91,8 @@ public class FacebookController : MonoBehaviour {
             Debug.Log("User cancelled login");
         }
     }
-    */
-    /*
+    
+    
     public void PublicScore()
     {
         var tutParams = new Dictionary<string, object>();
@@ -99,14 +105,14 @@ public class FacebookController : MonoBehaviour {
             parameters: tutParams
         );
     }
-    */
+    
     // Use this for initialization
     void Start ()
     {
         contentURL = new Uri(URLContent);
         photoURL = new Uri(URLPhoto);
         contentDescription = "É 37 anos! Consegui " + PlayerPrefsManager.GetIntLocalValue(PlayerPrefsManager.LASTSCORE) + " levantamentos. Duvido fazer mais :D";
-        FB.Init();
+        //FB.Init();
     }
 	
 	// Update is called once per frame
@@ -137,14 +143,14 @@ public class FacebookController : MonoBehaviour {
         }
         else if (!String.IsNullOrEmpty(result.PostId))
         {
-            ShareButton.interactable = false;
+            //ShareButton.interactable = false;
             // Print post identifier of the shared content
             Debug.Log(result.PostId);
         }
         else
         {
 
-            ShareButton.interactable = false;
+            //ShareButton.interactable = false;
             // Share succeeded without postID
             Debug.Log("ShareLink success!");
         }
